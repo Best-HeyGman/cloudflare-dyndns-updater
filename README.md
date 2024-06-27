@@ -1,5 +1,5 @@
 # cloudflare-dyndns-updater
-Simple script to update your A and AAAA record to the current public IP of your server via the Cloudflare API.
+Simple script to update A and AAAA records to the current public IP of your server via the Cloudflare API.
 
 # What this script does
 1. Automatically gests the current public IPv4 and IPv6 adress of your Server via https://cloudflare.com/cdn-cgi/trace
