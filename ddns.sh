@@ -9,9 +9,9 @@ set -e
 
 
 # Config
-domain_names="dns_name.com
-subdomain1.dns_name.com
-subdomain2.dns_name.com"
+domain_names='my-domain.com
+subdomain1.my-domain.com
+subdomain2.my-domain.com'
 zone_id=''
 api_token=''
 
