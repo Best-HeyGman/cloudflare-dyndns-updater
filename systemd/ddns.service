@@ -1,0 +1,7 @@
+[Unit]
+Description=Update Cloudflare dynamic dns
+
+[Service]
+Type=simple
+Restart=no
+ExecStart=/opt/ddns.sh
