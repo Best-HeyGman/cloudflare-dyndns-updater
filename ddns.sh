@@ -43,21 +43,25 @@ do
 
 
 	# AAAA
-	record_id=$(echo $records | jq -r '.result[] | select(.name=="'"$domain"'" and .type=="AAAA") | .id')
-	
-	# If you don't explicitly set the proxied field, it would be set to "Not Proxied"
-	# So we set it explicitly on every update to what it should be
-	proxied=$(echo $records | jq -r '.result[] | select(.name=="'"$domain"'" and .type=="AAAA") | .proxied')
+	# Only update if ipv6 to the internet is possible
+	if [ -n "$ipv6" ]
+	then
+		record_id=$(echo $records | jq -r '.result[] | select(.name=="'"$domain"'" and .type=="AAAA") | .id')
+		
+		# If you don't explicitly set the proxied field, it would be set to "Not Proxied"
+		# So we set it explicitly on every update to what it should be
+		proxied=$(echo $records | jq -r '.result[] | select(.name=="'"$domain"'" and .type=="AAAA") | .proxied')
 
-	curl --no-progress-meter \
-	--request PUT \
-	--url https://api.cloudflare.com/client/v4/zones/$zone_id/dns_records/$record_id \
-	--header 'Content-Type: application/json' \
-	--header "Authorization: Bearer $api_token" \
-	--data "{
-	\"content\": \"$ipv6\",
-	\"name\": \"$domain\",
-	\"proxied\": $proxied,
-	\"type\": \"AAAA\"
-	}"
+		curl --no-progress-meter \
+		--request PUT \
+		--url https://api.cloudflare.com/client/v4/zones/$zone_id/dns_records/$record_id \
+		--header 'Content-Type: application/json' \
+		--header "Authorization: Bearer $api_token" \
+		--data "{
+		\"content\": \"$ipv6\",
+		\"name\": \"$domain\",
+		\"proxied\": $proxied,
+		\"type\": \"AAAA\"
+		}"
+	fi
 done
